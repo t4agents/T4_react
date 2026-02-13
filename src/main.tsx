@@ -5,7 +5,7 @@ import App from './App.tsx'
 import Spinner from './views/spinner/Spinner.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <Suspense fallback={<Spinner />}>
-    <App />
-  </Suspense>
+    <Suspense fallback={<Spinner />}>
+        <App />
+    </Suspense>
 )
