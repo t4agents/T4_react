@@ -28,7 +28,19 @@ const AuthRegister = () => {
             });
 
             const token = await userCredential.user.getIdToken();
-            console.log("REGISTER TOKEN:", token);
+            const res = await fetch("http://localhost:8008/auth/register", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText);
+            }
+
+            alert("User fully registered (Firebase + Backend)");
 
             alert("User created. Token in console.");
         } catch (error: any) {
