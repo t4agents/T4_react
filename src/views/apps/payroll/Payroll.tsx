@@ -1,10 +1,10 @@
-import TableComp from 'src/components/utilities/table';
+import TableComp from 'src/components/apps/payroll';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
-import StripedRowTable from 'src/components/utilities/table/StripedRowTable';
-import HoverTable from 'src/components/utilities/table/HoverTable';
-import CheckboxTable from 'src/components/utilities/table/CheckboxTable';
-import { DataTable } from 'src/components/utilities/table/DataTable';
-import { EmployeesData } from 'src/components/utilities/table/data';
+import StripedRowTable from 'src/components/apps/payroll/StripedRowTable';
+import HoverTable from 'src/components/apps/payroll/HoverTable';
+import CheckboxTable from 'src/components/apps/payroll/CheckboxTable';
+import { DataTable } from 'src/components/apps/payroll/DataTable';
+import { EmployeesData } from 'src/components/apps/payroll/data';
 const BCrumb = [
     {
         to: '/',

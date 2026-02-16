@@ -8,7 +8,7 @@ const TablePerformersData = [
     {
         key: 'performerData1',
         profileImg: userimg1,
-        username: 'Sunil Joshi',
+        username: 'Sunil1 Joshi',
         designation: 'Web Designer',
         project: 'Elite Admin',
         priority: 'Low',
@@ -19,7 +19,7 @@ const TablePerformersData = [
     {
         key: 'performerData2',
         profileImg: userimg2,
-        username: 'John Deo',
+        username: 'John1 Deo',
         designation: 'Web Developer',
         project: 'Flexy Admin',
         priority: 'Medium',
@@ -30,7 +30,7 @@ const TablePerformersData = [
     {
         key: 'performerData3',
         profileImg: userimg3,
-        username: 'Nirav Joshi',
+        username: 'Nirav1 Joshi',
         designation: 'Web Manager',
         project: 'Material Pro',
         priority: 'High',

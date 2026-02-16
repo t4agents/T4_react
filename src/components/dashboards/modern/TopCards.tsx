@@ -18,6 +18,16 @@ const TopCards = () => {
     const TopCardInfo = [
         {
             key: "card1",
+            title: "Payroll",
+            desc: "$96k",
+            img: iconBriefcase,
+            bgcolor: "bg-warning/10 dark:bg-warning/10",
+            textclr: "text-warning dark:text-warning",
+            url: "/apps/payroll"
+
+        },
+        {
+            key: "card5",
             title: "Notes",
             desc: "4+",
             img: iconConnect,
@@ -51,16 +61,6 @@ const TopCards = () => {
             bgcolor: "bg-secondary/10 dark:bg-secondary/10",
             textclr: "text-primary dark:text-primary",
             url: "/apps/tickets"
-        },
-        {
-            key: "card5",
-            title: "Payroll",
-            desc: "$96k",
-            img: iconBriefcase,
-            bgcolor: "bg-warning/10 dark:bg-warning/10",
-            textclr: "text-warning dark:text-warning",
-            url: "/apps/payroll"
-
         },
         {
             key: "card7",

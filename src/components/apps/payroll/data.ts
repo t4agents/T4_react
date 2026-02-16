@@ -12,11 +12,11 @@ import userimg10 from 'src/assets/images/profile/user-10.jpg';
 export const EmployeesData = [
     {
         "name": {
-            "text": "Alice Johnson",
-            "image": userimg1
+            "text": "Alice1 Johnson",
+            "image": userimg2
         },
         "position": "Senior Software Engineer",
-        "salary": 120000,
+        "salary": 1230000,
         "department": "Engineering",
         "status": "Active",
 

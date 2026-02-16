@@ -12,7 +12,7 @@ import userimg10 from 'src/assets/images/profile/user-10.jpg';
 export const EmployeesData = [
     {
         "name": {
-            "text": "Alice Johnson",
+            "text": "Alice2 Johnson",
             "image": userimg1
         },
         "position": "Senior Software Engineer",
