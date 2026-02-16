@@ -52,7 +52,7 @@ const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/User
 ========================= */
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
 const Form = Loadable(lazy(() => import('../views/utilities/form/Form')));
-const Table = Loadable(lazy(() => import('../views/utilities/table/Table')));
+const TableDefault = Loadable(lazy(() => import('../views/utilities/table/Table_Default')));
 const Payroll = Loadable(lazy(() => import('../views/apps/payroll/Payroll')));
 const Tickets = Loadable(lazy(() => import('../views/apps/tickets/Tickets')));
 const CreateTickets = Loadable(lazy(() => import('../views/apps/tickets/CreateTickets')));
@@ -75,9 +75,9 @@ const router = createBrowserRouter([
                     { index: true, element: <Modern /> },
 
                     { path: 'apps/notes', element: <Notes /> },
-                    { path: 'apps/payroll', element: <Table /> },
+                    { path: 'apps/payroll', element: <Payroll /> },
                     { path: 'utilities/form', element: <Form /> },
-                    { path: 'utilities/table', element: <Table /> },
+                    { path: 'utilities/table', element: <TableDefault /> },
                     { path: 'apps/tickets', element: <Tickets /> },
                     { path: 'apps/tickets/create', element: <CreateTickets /> },
                     { path: 'apps/blog/post', element: <Blog /> },

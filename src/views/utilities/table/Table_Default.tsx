@@ -4,7 +4,7 @@ import StripedRowTable from 'src/components/utilities/table/StripedRowTable';
 import HoverTable from 'src/components/utilities/table/HoverTable';
 import CheckboxTable from 'src/components/utilities/table/CheckboxTable';
 import { DataTable } from 'src/components/utilities/table/DataTable';
-import { EmployeesData } from 'src/components/utilities/table/data';
+import { EmployeesData } from 'src/components/utilities/table/data_default';
 const BCrumb = [
   {
     to: '/',
