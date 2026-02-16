@@ -8,19 +8,19 @@ import Loadable from '../layouts/full/shared/loadable/Loadable';
    Auth Logic (REPLACE THIS)
 ========================= */
 const isAuthenticated = (): boolean => {
-  // TODO: replace with real auth logic (context / redux / token check)
-  return !!localStorage.getItem('access_token');
+    // TODO: replace with real auth logic (context / redux / token check)
+    return !!localStorage.getItem('access_token');
 };
 
 /* =========================
    Route Guards
 ========================= */
 const ProtectedRoute = () => {
-  return isAuthenticated() ? <Outlet /> : <Navigate to="/auth/auth2/login" replace />;
+    return isAuthenticated() ? <Outlet /> : <Navigate to="/auth/auth2/login" replace />;
 };
 
 const PublicRoute = () => {
-  return !isAuthenticated() ? <Outlet /> : <Navigate to="/" replace />;
+    return !isAuthenticated() ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 /* =========================
@@ -63,62 +63,62 @@ const SolarIcon = Loadable(lazy(() => import('../views/icons/SolarIcon')));
    Router Config
 ========================= */
 const router = createBrowserRouter([
-  // PROTECTED APP ROUTES
-  {
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: '/',
-        element: <FullLayout />,
+    // PROTECTED APP ROUTES
+    {
+        element: <ProtectedRoute />,
         children: [
-          { index: true, element: <Modern /> },
+            {
+                path: '/',
+                element: <FullLayout />,
+                children: [
+                    { index: true, element: <Modern /> },
 
-          { path: 'apps/notes', element: <Notes /> },
-          { path: 'utilities/form', element: <Form /> },
-          { path: 'utilities/table', element: <Table /> },
-          { path: 'apps/tickets', element: <Tickets /> },
-          { path: 'apps/tickets/create', element: <CreateTickets /> },
-          { path: 'apps/blog/post', element: <Blog /> },
-          { path: 'apps/blog/detail/:id', element: <BlogDetail /> },
-          { path: 'user-profile', element: <UserProfile /> },
-          { path: 'icons/iconify', element: <SolarIcon /> },
+                    { path: 'apps/notes', element: <Notes /> },
+                    { path: 'utilities/form', element: <Form /> },
+                    { path: 'utilities/table', element: <Table /> },
+                    { path: 'apps/tickets', element: <Tickets /> },
+                    { path: 'apps/tickets/create', element: <CreateTickets /> },
+                    { path: 'apps/blog/post', element: <Blog /> },
+                    { path: 'apps/blog/detail/:id', element: <BlogDetail /> },
+                    { path: 'user-profile', element: <UserProfile /> },
+                    { path: 'icons/iconify', element: <SolarIcon /> },
+                ],
+            },
         ],
-      },
-    ],
-  },
+    },
 
-  // PUBLIC AUTH ROUTES
-  {
-    element: <PublicRoute />,
-    children: [
-      {
-        path: '/',
+    // PUBLIC AUTH ROUTES
+    {
+        element: <PublicRoute />,
+        children: [
+            {
+                path: '/',
+                element: <BlankLayout />,
+                children: [
+                    { path: 'auth/auth2/login', element: <Login2 /> },
+                    { path: 'auth/auth2/register', element: <Register2 /> },
+                ],
+            },
+        ],
+    },
+
+    // SYSTEM ROUTES (NO GUARD)
+    {
+        path: '/auth/maintenance',
         element: <BlankLayout />,
-        children: [
-          { path: 'auth/auth2/login', element: <Login2 /> },
-          { path: 'auth/auth2/register', element: <Register2 /> },
-        ],
-      },
-    ],
-  },
+        children: [{ index: true, element: <Maintainance /> }],
+    },
+    {
+        path: '/auth/404',
+        element: <BlankLayout />,
+        children: [{ index: true, element: <Error /> }],
+    },
 
-  // SYSTEM ROUTES (NO GUARD)
-  {
-    path: '/auth/maintenance',
-    element: <BlankLayout />,
-    children: [{ index: true, element: <Maintainance /> }],
-  },
-  {
-    path: '/auth/404',
-    element: <BlankLayout />,
-    children: [{ index: true, element: <Error /> }],
-  },
-
-  // FALLBACK
-  {
-    path: '*',
-    element: <Navigate to="/auth/404" replace />,
-  },
+    // FALLBACK
+    {
+        path: '*',
+        element: <Navigate to="/auth/404" replace />,
+    },
 ]);
 
 export default router;

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "src/components/ui/button";
 import { Input } from "src/components/ui/input";
 import { Label } from "src/components/ui/label";
@@ -8,6 +10,8 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "src/lib/firebase";
 
 const AuthRegister = () => {
+    const navigate = useNavigate();
+
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -40,9 +44,9 @@ const AuthRegister = () => {
                 throw new Error(errText);
             }
 
-            alert("User fully registered (Firebase + Backend)");
+            localStorage.setItem("access_token", token);   // ✅ store token
+            navigate("/");
 
-            alert("User created. Token in console.");
         } catch (error: any) {
             console.error(error);
             alert(error.message);

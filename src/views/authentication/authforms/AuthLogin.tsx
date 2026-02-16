@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from 'react-router';
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from 'src/components/ui/button';
 import { Checkbox } from 'src/components/ui/checkbox';
 import { Input } from 'src/components/ui/input';
@@ -10,6 +10,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "src/lib/firebase";
 
 const AuthLogin = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
@@ -20,9 +22,10 @@ const AuthLogin = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
             const token = await userCredential.user.getIdToken();
-            console.log("FIREBASE ID TOKEN:", token);
+            // console.log("FIREBASE ID TOKEN:", token);
 
-            alert("Login success. Token in console.");
+            localStorage.setItem("access_token", token);  // ✅ store
+            navigate("/");
         } catch (error: any) {
             console.error(error);
             alert(error.message);
