@@ -61,10 +61,12 @@ export function toTitleCase(str: string) {
 
 interface DynamicTableProps<T> {
     data?: T[];
+    onEdit?: (row: T) => void;
 }
 
-export const DataTable = <T extends Record<string, unknown>>({
+export const DataTable = <T extends Record<string, any>>({
     data = [],
+    onEdit,
 }: DynamicTableProps<T>) => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -294,10 +296,17 @@ export const DataTable = <T extends Record<string, unknown>>({
             id: 'action',
             header: 'Action',
             enableSorting: false,
-            cell: ({ }) => {
+            cell: ({ row }) => {
+                const original = row.original;
                 return (
                     <div className="flex items-center gap-2">
-                        <Button size={'sm'} variant={'lightprimary'} className="size-8! rounded-full">
+                        <Button size={'sm'} variant={'lightprimary'}
+                            className="size-8! rounded-full"
+                            onClick={() => {
+                                console.log(original);
+                                onEdit?.(original);
+                            }}
+                        >
                             <Pencil className="size-5" />
                         </Button>
                         <Button size={'sm'} variant={'lighterror'} className="size-8! rounded-full">

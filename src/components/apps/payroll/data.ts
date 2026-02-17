@@ -8,8 +8,9 @@ import userimg7 from 'src/assets/images/profile/user-7.jpg';
 import userimg8 from 'src/assets/images/profile/user-8.jpg';
 import userimg9 from 'src/assets/images/profile/user-9.jpg';
 import userimg10 from 'src/assets/images/profile/user-10.jpg';
+import {Employee} from 'src/types/employee'
 
-export const EmployeesData = [
+export const EmployeesData: Employee[] = [
     {
         "name": {
             "text": "Alice1 Johnson",
@@ -18,8 +19,7 @@ export const EmployeesData = [
         "position": "Senior Software Engineer",
         "salary": 1230000,
         "department": "Engineering",
-        "status": "Active",
-
+        "status": "in_progress",
     },
     {
         "name": {
@@ -29,7 +29,7 @@ export const EmployeesData = [
         "position": "Marketing Manager",
         "salary": 95000,
         "department": "Marketing",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -40,7 +40,7 @@ export const EmployeesData = [
         "position": "HR Specialist",
         "salary": 70000,
         "department": "Human Resources",
-        "status": "On Leave",
+        "status": "in_progress",
 
 
     },
@@ -52,7 +52,7 @@ export const EmployeesData = [
         "position": "Product Owner",
         "salary": 110000,
         "department": "Product Development",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -63,7 +63,7 @@ export const EmployeesData = [
         "position": "Junior Software Engineer",
         "salary": 80000,
         "department": "Engineering",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -74,7 +74,7 @@ export const EmployeesData = [
         "position": "Sales Representative",
         "salary": 65000,
         "department": "Sales",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -85,7 +85,7 @@ export const EmployeesData = [
         "position": "Financial Analyst",
         "salary": 88000,
         "department": "Finance",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -96,7 +96,7 @@ export const EmployeesData = [
         "position": "CEO",
         "salary": 250000,
         "department": "Executive",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
@@ -107,7 +107,7 @@ export const EmployeesData = [
         "position": "Data Scientist",
         "salary": 130000,
         "department": "Data Analytics",
-        "status": "Active",
+        "status": "in_progress",
 
     },
     {
