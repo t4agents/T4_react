@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-import TableComp from 'src/components/apps/payroll';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
-import StripedRowTable from 'src/components/apps/payroll/StripedRowTable';
-import HoverTable from 'src/components/apps/payroll/HoverTable';
-import CheckboxTable from 'src/components/apps/payroll/CheckboxTable';
 import { DataTable } from 'src/components/apps/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
 
@@ -67,12 +63,9 @@ const Payroll = () => {
                     <DataTable<Employee>
                         data={employees}
                         onEdit={handleEdit}
+                        visibleColumns={['first_name', 'last_name']}
                     />
                 )}
-                <TableComp />
-                <StripedRowTable />
-                <HoverTable />
-                <CheckboxTable />
             </div>
 
             {isFormOpen && selectedEmployee && (

@@ -62,11 +62,13 @@ export function toTitleCase(str: string) {
 interface DynamicTableProps<T> {
     data?: T[];
     onEdit?: (row: T) => void;
+    visibleColumns?: string[];
 }
 
 export const DataTable = <T extends Record<string, any>>({
     data = [],
     onEdit,
+    visibleColumns,
 }: DynamicTableProps<T>) => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -85,10 +87,15 @@ export const DataTable = <T extends Record<string, any>>({
     const columns = useMemo<ColumnDef<T, unknown>[]>(() => {
         if (!data.length) return [];
 
-        const keys = Object.keys(data[0]).filter((key) => {
+        let keys = Object.keys(data[0]).filter((key) => {
             const val = data[0][key];
             return !Array.isArray(val);
         });
+
+        // Filter to only visible columns if specified
+        if (visibleColumns && visibleColumns.length > 0) {
+            keys = keys.filter((key) => visibleColumns.includes(key));
+        }
 
         const baseColumns = keys.map((col) => ({
             accessorKey: col,
@@ -318,7 +325,7 @@ export const DataTable = <T extends Record<string, any>>({
         };
 
         return [...baseColumns, actionColumn];
-    }, [data]);
+    }, [data, visibleColumns]);
 
     // React Table Setup
     const table = useReactTable({
