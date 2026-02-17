@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
 import { DataTable } from 'src/components/apps/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
+import EmployeeFormModal from 'src/views/apps/payroll/EmployeeFormModal';
 
 import PayrollForm from 'src/views/apps/payroll/PayrollForm';
 import {Employee} from 'src/types/employee'
@@ -52,6 +53,17 @@ const Payroll = () => {
         setSelectedEmployee(null);
         setIsFormOpen(true);
     };
+
+    const handleFormComplete = async () => {
+        // Refresh the employee list
+        try {
+            const data = await employeeAPI.listEmployees({ skip: 0, limit: 100 });
+            setEmployees(data);
+        } catch (err) {
+            console.error('Error refreshing employees:', err);
+        }
+        setIsFormOpen(false);
+    };
     
     return (
         <>
@@ -74,9 +86,17 @@ const Payroll = () => {
                 )}
             </div>
 
-            {isFormOpen && (
+            {isFormOpen && !selectedEmployee && (
+                <EmployeeFormModal
+                    isOpen={isFormOpen}
+                    onClose={() => setIsFormOpen(false)}
+                    onComplete={handleFormComplete}
+                />
+            )}
+
+            {isFormOpen && selectedEmployee && (
                 <PayrollForm
-                    employee={selectedEmployee || undefined}
+                    employee={selectedEmployee}
                     onClose={() => setIsFormOpen(false)}
                     onComplete={() => setIsFormOpen(false)}
                 />

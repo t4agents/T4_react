@@ -384,7 +384,7 @@ export const DataTable = <T extends Record<string, any>>({
                                 {onAddNew && (
                                     <Button onClick={onAddNew} className="flex items-center gap-2" size="sm">
                                         <Icon icon="mdi:plus" className="w-4 h-4" />
-                                        Add New
+                                        Add New Employee
                                     </Button>
                                 )}
                             </div>
