@@ -47,6 +47,11 @@ const Payroll = () => {
         setSelectedEmployee(employee);
         setIsFormOpen(true);
     };
+
+    const handleAddNew = () => {
+        setSelectedEmployee(null);
+        setIsFormOpen(true);
+    };
     
     return (
         <>
@@ -63,18 +68,19 @@ const Payroll = () => {
                     <DataTable<Employee>
                         data={employees}
                         onEdit={handleEdit}
+                        onAddNew={handleAddNew}
                         visibleColumns={['first_name', 'last_name']}
                     />
                 )}
             </div>
 
-            {isFormOpen && selectedEmployee && (
+            {isFormOpen && (
                 <PayrollForm
-                    employee={selectedEmployee}
+                    employee={selectedEmployee || undefined}
                     onClose={() => setIsFormOpen(false)}
                     onComplete={() => setIsFormOpen(false)}
-                />)
-            }
+                />
+            )}
         </>
     );
 };

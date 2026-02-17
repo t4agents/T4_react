@@ -63,12 +63,14 @@ interface DynamicTableProps<T> {
     data?: T[];
     onEdit?: (row: T) => void;
     visibleColumns?: string[];
+    onAddNew?: () => void;
 }
 
 export const DataTable = <T extends Record<string, any>>({
     data = [],
     onEdit,
     visibleColumns,
+    onAddNew,
 }: DynamicTableProps<T>) => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -377,7 +379,15 @@ export const DataTable = <T extends Record<string, any>>({
                     <>
                         {/* Search + Download */}
                         <div className="p-4 pt-0 flex items-center justify-between flex-wrap gap-4">
-                            <h3 className="text-xl font-semibold mb-2">Payroll</h3>
+                            <div className="flex items-center gap-4">
+                                <h3 className="text-xl font-semibold">Payroll</h3>
+                                {onAddNew && (
+                                    <Button onClick={onAddNew} className="flex items-center gap-2" size="sm">
+                                        <Icon icon="mdi:plus" className="w-4 h-4" />
+                                        Add New
+                                    </Button>
+                                )}
+                            </div>
                             <div className="flex items-center gap-2 flex-wrap">
                                 <Input
                                     type="text"
