@@ -66,7 +66,7 @@ interface DynamicTableProps<T> {
     onAddNew?: () => void;
 }
 
-export const DataTable = <T extends Record<string, any>>({
+export const PayrollDataTable = <T extends Record<string, any>>({
     data = [],
     onEdit,
     visibleColumns,

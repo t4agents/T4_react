@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
-import { DataTable } from 'src/components/apps/payroll/PayrollDataTable';
+import { PayrollDataTable } from 'src/components/apps/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
 import EmployeeFormModal from 'src/views/apps/payroll/EmployeeFormModal';
 
@@ -67,7 +67,7 @@ const Payroll = () => {
     
     return (
         <>
-            <BreadcrumbComp title="Table" items={BCrumb} />
+            <BreadcrumbComp title="Payroll" items={BCrumb} />
             <div className="flex gap-6 flex-col ">
                 {error && (
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
@@ -77,7 +77,7 @@ const Payroll = () => {
                 {isLoading ? (
                     <div className="p-4 text-center text-gray-500">Loading employees...</div>
                 ) : (
-                    <DataTable<Employee>
+                    <PayrollDataTable<Employee>
                         data={employees}
                         onEdit={handleEdit}
                         onAddNew={handleAddNew}
