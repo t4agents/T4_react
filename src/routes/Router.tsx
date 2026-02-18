@@ -53,7 +53,7 @@ const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/User
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
 const Form = Loadable(lazy(() => import('../views/utilities/form/Form')));
 const TableDefault = Loadable(lazy(() => import('../views/utilities/table/Table_Default')));
-const Payroll = Loadable(lazy(() => import('../views/apps/payroll/Payroll')));
+const Payroll = Loadable(lazy(() => import('../payroll/PayrollEntrance')));
 const Tickets = Loadable(lazy(() => import('../views/apps/tickets/Tickets')));
 const CreateTickets = Loadable(lazy(() => import('../views/apps/tickets/CreateTickets')));
 const Blog = Loadable(lazy(() => import('../views/apps/blog/Blog')));
