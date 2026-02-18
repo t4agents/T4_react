@@ -113,14 +113,14 @@ const SidebarContent: MenuItem[] = [
             },
 
             {
-                name: 'Cards',
+                name: 'Payroll',
                 id: uniqueId(),
                 icon: 'solar:card-linear',
                 children: [
                     {
                         id: uniqueId(),
-                        name: 'Top Cards',
-                        url: 'https://tailwind-admin.com/ui-blocks/card#topCards',
+                        name: 'Payroll Scheduler',
+                        url: '/utilities/table',
                     },
                     {
                         id: uniqueId(),
@@ -230,14 +230,14 @@ const SidebarContent: MenuItem[] = [
                 ],
             },
             {
-                name: 'Banners',
+                name: 'HR',
                 id: uniqueId(),
                 icon: 'solar:object-scan-linear',
                 children: [
                     {
                         id: uniqueId(),
-                        name: 'Greeting Banner',
-                        url: 'https://tailwind-admin.com/ui-blocks/banner#greetingbanner',
+                        name: 'Employee',
+                        url: '/utilities/table',
                     },
                     {
                         id: uniqueId(),

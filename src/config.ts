@@ -10,8 +10,8 @@ export const config = {
   api: {
     // Base URL for API requests
     // Can be overridden by VITE_API_URL environment variable
-    // baseUrl: 'http://localhost:8008',
-    baseUrl: 'https://t4app.fastapicloud.dev'
+    baseUrl: 'http://localhost:8008',
+    // baseUrl: 'https://t4app.fastapicloud.dev'
   },
 
   // Pagination defaults

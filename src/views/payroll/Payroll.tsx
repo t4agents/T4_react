@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
 import { PayrollDataTable } from 'src/components/apps/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
-import EmployeeFormModal from 'src/views/apps/payroll/EmployeeFormModal';
+import EmployeeFormModal from './EmployeeFormModal';
 
-import PayrollForm from 'src/views/apps/payroll/PayrollForm';
+import PayrollForm from './PayrollForm';
 import {Employee} from 'src/types/employee'
 
 const BCrumb = [
