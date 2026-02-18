@@ -120,7 +120,7 @@ const SidebarContent: MenuItem[] = [
                     {
                         id: uniqueId(),
                         name: 'Payroll Scheduler',
-                        url: '/utilities/table',
+                        url: '/settings/payroll_schedule',
                     },
                     {
                         id: uniqueId(),
