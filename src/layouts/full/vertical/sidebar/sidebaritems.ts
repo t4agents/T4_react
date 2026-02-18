@@ -53,28 +53,28 @@ const SidebarContent: MenuItem[] = [
         children: [
             {
                 name: 'Run Payroll',
-                icon: 'solar:server-linear',
+                icon: 'solar:play-circle-linear',
                 id: uniqueId(),
                 url: '/apps/payroll',
             },
             {
                 name: 'Schedules',
-                icon: 'solar:document-add-linear',
+                icon: 'solar:calendar-linear',
                 id: uniqueId(),
                 url: '/payroll/schedule',
             },
 
             {
                 name: 'Periods ',
-                icon: 'solar:document-add-linear',
+                icon: 'solar:calendar-search-linear',
                 id: uniqueId(),
                 url: '/payroll/periods',
             },
             {
-                name: 'Reports ',
-                icon: 'solar:document-add-linear',
+                name: 'Employees',
+                icon: 'solar:users-group-rounded-linear',
                 id: uniqueId(),
-                url: '/payroll/reports',
+                url: '/payroll/employee',
             },
 
 
