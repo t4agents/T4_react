@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import React from 'react';
 import { notesType } from 'src/types/apps/notes';
-import { NotesData } from 'src/api/notes/notes-data';
+import { NotesData } from 'src/api/apps/notes/notes-data';
 
 export interface NotesContextType {
   notes: notesType[];

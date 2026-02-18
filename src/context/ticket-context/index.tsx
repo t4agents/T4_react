@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { TicketType } from 'src/types/ticket';
-import { TicketData } from 'src/api/ticket/ticket-data';
+import { TicketData } from 'src/api/apps/ticket/ticket-data';
 
 export interface TicketContextType {
   tickets: TicketType[];
