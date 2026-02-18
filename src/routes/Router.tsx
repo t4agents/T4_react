@@ -50,6 +50,9 @@ const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/User
 /* =========================
    Apps
 ========================= */
+const EmployeeList = Loadable(lazy(() => import('src/hr/employee/EmployeeList')));
+
+
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
 const Form = Loadable(lazy(() => import('../views/utilities/form/Form')));
 const TableDefault = Loadable(lazy(() => import('../views/utilities/table/Table_Default')));
@@ -74,8 +77,10 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: <Modern /> },
 
-                    { path: 'apps/notes', element: <Notes /> },
                     { path: 'apps/payroll', element: <Payroll /> },
+                    { path: 'hr/employee', element: <EmployeeList /> },
+
+                    { path: 'apps/notes', element: <Notes /> },
                     { path: 'utilities/form', element: <Form /> },
                     { path: 'utilities/table', element: <TableDefault /> },
                     { path: 'apps/tickets', element: <Tickets /> },
