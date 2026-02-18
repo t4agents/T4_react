@@ -114,7 +114,7 @@ export const PayrollDataTable = <T extends Record<string, any>>({
 
                     return (
                         <Badge
-                            className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${cls}`}
+                            className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap inline-block ${cls}`}
                         >
                             {renderValue(value)}
                         </Badge>
@@ -165,7 +165,7 @@ export const PayrollDataTable = <T extends Record<string, any>>({
 
                 if (col.toLowerCase().includes('id')) {
                     return (
-                        <span className="text-gray-900 dark:text-white font-medium max-w-50 truncate whitespace-nowrap">
+                        <span className="text-gray-900 dark:text-white font-medium max-w-xs truncate whitespace-nowrap">
                             {renderValue(value)}
                         </span>
                     );
@@ -245,8 +245,8 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                                             key={k}
                                             className={
                                                 k === 'name'
-                                                    ? 'text-gray-900 dark:text-white font-semibold max-w-50 truncate whitespace-nowrap pe-6'
-                                                    : 'text-sm text-gray-500 dark:text-gray-400 max-w-50 truncate whitespace-nowrap pe-6'
+                                                    ? 'text-gray-900 dark:text-white font-semibold max-w-xs truncate whitespace-nowrap pe-6'
+                                                    : 'text-xs sm:text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate whitespace-nowrap pe-6'
                                             }
                                         >
                                             {renderValue(displayValue)}
@@ -278,13 +278,13 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                 ) {
                     const cls = getColorForValue(String(value));
                     return (
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
                             <Badge
-                                className={`size-10 flex items-center justify-center rounded-full shrink-0 ${cls}`}
+                                className={`size-8 sm:size-10 flex items-center justify-center rounded-full flex-shrink-0 ${cls}`}
                             >
                                 {value ? String(value)[0]?.toUpperCase() : '?'}
                             </Badge>
-                            <span className="text-gray-900 dark:text-white font-semibold max-w-50 truncate whitespace-nowrap">
+                            <span className="text-gray-900 dark:text-white font-semibold max-w-xs truncate whitespace-nowrap text-xs sm:text-sm">
                                 {renderValue(value)}
                             </span>
                         </div>
@@ -292,7 +292,7 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                 }
 
                 return (
-                    <span className="text-gray-900 dark:text-white font-medium max-w-50 truncate block ">
+                    <span className="text-gray-900 dark:text-white font-medium max-w-xs truncate block">
                         {renderValue(value)}
                     </span>
                 );
@@ -308,18 +308,26 @@ export const PayrollDataTable = <T extends Record<string, any>>({
             cell: ({ row }) => {
                 const original = row.original;
                 return (
-                    <div className="flex items-center gap-2">
-                        <Button size={'sm'} variant={'lightprimary'}
-                            className="size-8! rounded-full"
+                    <div className="flex items-center gap-1 sm:gap-2 justify-end">
+                        <Button 
+                            size={'sm'} 
+                            variant={'lightprimary'}
+                            className="size-7 sm:size-8 !rounded-full flex-shrink-0"
                             onClick={() => {
                                 console.log(original);
                                 onEdit?.(original);
                             }}
+                            title="Edit"
                         >
-                            <Pencil className="size-5" />
+                            <Pencil className="size-4" />
                         </Button>
-                        <Button size={'sm'} variant={'lighterror'} className="size-8! rounded-full">
-                            <Trash2 className="size-5" />
+                        <Button 
+                            size={'sm'} 
+                            variant={'lighterror'} 
+                            className="size-7 sm:size-8 !rounded-full flex-shrink-0"
+                            title="Delete"
+                        >
+                            <Trash2 className="size-4" />
                         </Button>
                     </div>
                 );
@@ -377,54 +385,58 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                     <p className="text-center py-8 text-gray-500">No data available.</p>
                 ) : (
                     <>
-                        {/* Search + Download */}
-                        <div className="p-4 pt-0 flex items-center justify-between flex-wrap gap-4">
-                            <div className="flex items-center gap-4">
-                                <h3 className="text-xl font-semibold">Payroll</h3>
+                        {/* Search + Download - Responsive Layout */}
+                        <div className="p-4 pt-0 space-y-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <h3 className="text-lg sm:text-xl font-semibold">Payroll</h3>
                                 {onAddNew && (
-                                    <Button onClick={onAddNew} className="flex items-center gap-2" size="sm">
+                                    <Button onClick={onAddNew} className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start" size="sm">
                                         <Icon icon="mdi:plus" className="w-4 h-4" />
-                                        Add New Employee
+                                        <span className="hidden sm:inline">Add New Employee</span>
+                                        <span className="sm:hidden">Add Employee</span>
                                     </Button>
                                 )}
                             </div>
-                            <div className="flex items-center gap-2 flex-wrap">
+                            <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                                 <Input
                                     type="text"
-                                    className="max-w-96 lg:min-w-96 min-w-full placeholder:text-gray-400 dark:placeholder:text-white/20"
+                                    className="flex-1 min-w-0 placeholder:text-gray-400 dark:placeholder:text-white/20"
                                     value={globalFilter ?? ''}
                                     onChange={(e) => setGlobalFilter(e.target.value)}
-                                    placeholder="Search your relevant items..."
+                                    placeholder="Search..."
                                 />
-                                <Button onClick={handleDownload} className="p-2 px-4 rounded-md ">
-                                    <Icon icon="material-symbols:download-rounded" width={24} height={24} />
+                                <Button onClick={handleDownload} className="p-2 px-4 rounded-md sm:w-auto w-full">
+                                    <Icon icon="material-symbols:download-rounded" width={20} height={20} />
+                                    <span className="ml-2 sm:hidden">Download</span>
                                 </Button>
                             </div>
                         </div>
 
-                        {/* Table */}
-                        <div className="overflow-x-auto border rounded-md border-ld">
+                        {/* Desktop Table View */}
+                        <div className="hidden md:block overflow-x-auto border rounded-md border-ld">
                             <Table>
                                 <TableHeader>
                                     {table.getHeaderGroups().map((headerGroup) => (
-                                        <TableRow key={headerGroup.id} className="">
+                                        <TableRow key={headerGroup.id}>
                                             {headerGroup.headers.map((header) => (
                                                 <TableHead
                                                     key={header.id}
-                                                    className="cursor-pointer select-none min-w-42 px-0"
+                                                    className="cursor-pointer select-none min-w-32 px-0"
                                                 >
                                                     {header.isPlaceholder ? null : (
                                                         <Button
-                                                            className="flex items-center gap-1 px-4 bg-transparent hover:bg-transparent text-dark dark:text-white font-semibold"
+                                                            className="flex items-center gap-1 px-4 bg-transparent hover:bg-transparent text-dark dark:text-white font-semibold text-xs sm:text-sm"
                                                             onClick={header.column.getToggleSortingHandler()}
                                                         >
-                                                            {flexRender(header.column.columnDef.header, header.getContext())}
+                                                            <span className="truncate">
+                                                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                                            </span>
                                                             {{
-                                                                asc: <ArrowUp className="w-4 h-4 inline" />,
-                                                                desc: <ArrowDown className="w-4 h-4 inline" />,
+                                                                asc: <ArrowUp className="w-4 h-4 inline flex-shrink-0" />,
+                                                                desc: <ArrowDown className="w-4 h-4 inline flex-shrink-0" />,
                                                             }[header.column.getIsSorted() as string] ??
                                                                 (header.column.id !== 'action' ? (
-                                                                    <ChevronsUpDown className="w-2 h-2 inline" />
+                                                                    <ChevronsUpDown className="w-2 h-2 inline flex-shrink-0" />
                                                                 ) : null)}
                                                         </Button>
                                                     )}
@@ -439,8 +451,10 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                                         table.getRowModel().rows.map((row) => (
                                             <TableRow key={row.id} className="hover:bg-primary/10 transition-colors">
                                                 {row.getVisibleCells().map((cell) => (
-                                                    <TableCell key={cell.id} className="text-gray-700 dark:text-white/70">
-                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                    <TableCell key={cell.id} className="text-gray-700 dark:text-white/70 text-sm px-4 py-3">
+                                                        <div className="truncate">
+                                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        </div>
                                                     </TableCell>
                                                 ))}
                                             </TableRow>
@@ -459,52 +473,96 @@ export const PayrollDataTable = <T extends Record<string, any>>({
                             </Table>
                         </div>
 
-                        {/* Pagination Controls */}
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-border dark:border-white/10">
-                            <div className="flex gap-2">
-                                <Button
-                                    onClick={() => table.previousPage()}
-                                    disabled={!table.getCanPreviousPage()}
-                                    variant={'secondary'}
-                                //   className="disabled:bg-gray-300 dark:disabled:bg-white/30 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600"
-                                >
-                                    Previous
-                                </Button>
-                                <Button
-                                    onClick={() => table.nextPage()}
-                                    disabled={!table.getCanNextPage()}
-                                //   className="disabled:bg-gray-300 dark:disabled:bg-white/30 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600"
-                                >
-                                    Next
-                                </Button>
-                            </div>
+                        {/* Mobile Card View */}
+                        <div className="md:hidden space-y-3 px-4 py-2">
+                            {table.getRowModel().rows.length > 0 ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <div key={row.id} className="border border-border rounded-lg p-4 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
+                                        <div className="space-y-3">
+                                            {row.getVisibleCells().map((cell, idx) => {
+                                                const header = flexRender(
+                                                    cell.column.columnDef.header,
+                                                    cell.column.columnDef.header as any,
+                                                );
+                                                // Skip action column in header display on mobile
+                                                if (cell.column.id === 'action') {
+                                                    return (
+                                                        <div key={cell.id} className="flex justify-end pt-2 border-t border-border">
+                                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        </div>
+                                                    );
+                                                }
 
-                            <div className="text-forest-black dark:text-white/90 font-medium text-base">
-                                Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                            </div>
+                                                return (
+                                                    <div key={cell.id} className="flex flex-col">
+                                                        <span className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+                                                            {header}
+                                                        </span>
+                                                        <span className="text-sm text-gray-900 dark:text-white/80 mt-1">
+                                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center p-6 text-gray-500 dark:text-white/70 font-medium">
+                                    No results found.
+                                </div>
+                            )}
+                        </div>
 
-                            <div className="flex items-center gap-2">
-                                <Label
-                                    htmlFor="pageSize"
-                                    className="mr-0 text-forest-black dark:text-white/90 text-base font-medium whitespace-nowrap min-w-32"
-                                >
-                                    Rows per page:
-                                </Label>
-                                <Select
-                                    value={String(table.getState().pagination.pageSize)}
-                                    onValueChange={(value) => table.setPageSize(Number(value))}
-                                >
-                                    <SelectTrigger className="!w-18 cursor-pointer">
-                                        <SelectValue placeholder="Page size" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {paginationOptions.map((size) => (
-                                            <SelectItem key={size} value={String(size)}>
-                                                {size}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                        {/* Pagination Controls - Responsive */}
+                        <div className="flex flex-col gap-4 p-4 border-t border-border dark:border-white/10">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                                <div className="flex gap-2 w-full sm:w-auto">
+                                    <Button
+                                        onClick={() => table.previousPage()}
+                                        disabled={!table.getCanPreviousPage()}
+                                        variant={'secondary'}
+                                        className="flex-1 sm:flex-none text-xs sm:text-sm"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <Button
+                                        onClick={() => table.nextPage()}
+                                        disabled={!table.getCanNextPage()}
+                                        className="flex-1 sm:flex-none text-xs sm:text-sm"
+                                    >
+                                        Next
+                                    </Button>
+                                </div>
+
+                                <div className="text-forest-black dark:text-white/90 font-medium text-xs sm:text-base whitespace-nowrap">
+                                    Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                                </div>
+
+                                <div className="flex items-center gap-2 w-full sm:w-auto">
+                                    <Label
+                                        htmlFor="pageSize"
+                                        className="mr-0 text-forest-black dark:text-white/90 text-xs sm:text-base font-medium whitespace-nowrap"
+                                    >
+                                        <span className="hidden sm:inline">Rows per page:</span>
+                                        <span className="sm:hidden">Rows:</span>
+                                    </Label>
+                                    <Select
+                                        value={String(table.getState().pagination.pageSize)}
+                                        onValueChange={(value) => table.setPageSize(Number(value))}
+                                    >
+                                        <SelectTrigger className="!w-16 sm:!w-18 cursor-pointer text-xs sm:text-sm">
+                                            <SelectValue placeholder="Size" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {paginationOptions.map((size) => (
+                                                <SelectItem key={size} value={String(size)}>
+                                                    {size}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </div>
                         </div>
                     </>
