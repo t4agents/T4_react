@@ -20,7 +20,7 @@ export const payrollAPI = {
      * Create a new payroll period
      */
     async createPayrollPeriod(data: Partial<PayrollPeriod>): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll-periods`, {
+        const response = await fetch(`${API_BASE_URL}/payroll/periods`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const payrollAPI = {
      * Get payroll period by ID
      */
     async getPayrollPeriod(periodId: string): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll-periods/${periodId}`);
+        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll period: ${response.statusText}`);
@@ -65,8 +65,8 @@ export const payrollAPI = {
         }
 
         const url = queryParams.toString()
-            ? `${API_BASE_URL}/payroll-periods?${queryParams.toString()}`
-            : `${API_BASE_URL}/payroll-periods`;
+            ? `${API_BASE_URL}/payroll/periods?${queryParams.toString()}`
+            : `${API_BASE_URL}/payroll/periods`;
 
         const response = await fetch(url);
 
@@ -81,7 +81,7 @@ export const payrollAPI = {
      * Update payroll period
      */
     async updatePayrollPeriod(periodId: string, data: Partial<PayrollPeriod>): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll-periods/${periodId}`, {
+        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const payrollAPI = {
      * Delete payroll period
      */
     async deletePayrollPeriod(periodId: string): Promise<void> {
-        const response = await fetch(`${API_BASE_URL}/payroll-periods/${periodId}`, {
+        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`, {
             method: 'DELETE',
         });
 
@@ -113,7 +113,7 @@ export const payrollAPI = {
      * Get current or active payroll period
      */
     async getActivePayrollPeriod(): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll-periods/active/current`);
+        const response = await fetch(`${API_BASE_URL}/payroll/periods/active/current`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch active payroll period: ${response.statusText}`);

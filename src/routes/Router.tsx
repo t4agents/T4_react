@@ -51,7 +51,8 @@ const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/User
    Apps
 ========================= */
 const EmployeeList = Loadable(lazy(() => import('src/settings/employee/EmployeeList')));
-const PayrollScheduleForm = Loadable(lazy(() => import('src/settings/payroll/PayrollScheduleForm')));
+const PayrollScheduleEntrance = Loadable(lazy(() => import('src/payroll/PayrollScheduleEntrance')));
+const PayrollPeriodEntrance = Loadable(lazy(() => import('src/payroll/PayrollPeriodEntrance')));
 
 
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
@@ -80,7 +81,8 @@ const router = createBrowserRouter([
 
                     { path: 'apps/payroll', element: <Payroll /> },
                     { path: 'settings/employee', element: <EmployeeList /> },
-                    { path: 'settings/payroll_schedule', element: <PayrollScheduleForm /> },
+                    { path: 'payroll/schedule', element: <PayrollScheduleEntrance /> },
+                    { path: 'payroll/periods', element: <PayrollPeriodEntrance /> },
 
                     { path: 'utilities/form', element: <Form /> },
 

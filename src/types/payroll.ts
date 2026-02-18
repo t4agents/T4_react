@@ -1,11 +1,10 @@
 export interface PayrollPeriod {
     id?: string;
-    name: string;
+    payroll_schedule_id: string;
     start_date: string;
     end_date: string;
+    pay_date: string;
     status?: 'draft' | 'in_progress' | 'completed' | 'archived';
-    description?: string;
-    pay_date?: string;
     created_at?: string;
     updated_at?: string;
 }
