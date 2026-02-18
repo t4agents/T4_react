@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
-import { PayrollDataTable } from 'src/components/apps/payroll/PayrollDataTable';
+import { PayrollDataTable } from 'src/components/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
 import EmployeeFormModal from './EmployeeFormModal';
 
