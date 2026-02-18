@@ -10,8 +10,10 @@ import {
     DialogTitle,
     DialogFooter,
 } from "src/components/ui/dialog";
-
+import { Alert, AlertDescription } from "src/components/ui/alert";
+import { employeeAPI } from "src/api/employee";
 import { Employee } from "src/types/employee";
+import { usePayroll } from "src/context/payroll-context";
 interface PayrollFormProps {
     employee: Employee;
     onClose: () => void;
@@ -22,6 +24,7 @@ const PayrollForm = ({
     onClose,
     onComplete,
 }: PayrollFormProps) => {
+    const { activePeriod } = usePayroll();
     const [regularHours, setRegularHours] = useState(80);
     const [hourlyRate, setHourlyRate] = useState(25);
     const [overtimeHours, setOvertimeHours] = useState(5);
@@ -30,6 +33,8 @@ const PayrollForm = ({
     const [vacation, setVacation] = useState(0);
     const [notes, setNotes] = useState("");
     const [reviewOpen, setReviewOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     // Auto calculation
     const gross =
@@ -45,6 +50,39 @@ const PayrollForm = ({
     const totalDeduction = cpp + ei + tax;
     const net = gross - totalDeduction;
 
+    const handleConfirmAndComplete = async () => {
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const payrollData: Partial<Employee> = {
+                regularHours,
+                hourlyRate,
+                overtimeHours,
+                overtimeRate,
+                bonus,
+                vacationPay: vacation,
+                status: 'completed',
+            };
+
+            await employeeAPI.updateEmployee(employee.id, payrollData);
+
+            // Close the review dialog
+            setReviewOpen(false);
+
+            // Call the onComplete callback to notify parent component
+            onComplete();
+        } catch (err) {
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "Failed to save payroll data. Please try again."
+            );
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <Dialog open onOpenChange={onClose}>
             <DialogContent className="w-[95vw] max-w-6xl max-h-[90vh] overflow-y-auto">
@@ -52,9 +90,16 @@ const PayrollForm = ({
 
                     {/* Header */}
                     <div>
-                        <h2 className="text-2xl font-semibold">John Smith</h2>
+                        <h2 className="text-2xl font-semibold">{employee.name?.text || 'Employee'}</h2>
                         <p className="text-sm text-muted-foreground">
-                            Payroll Period: Feb 15–28 • Status: In Progress • Pay Date: Mar 5
+                            {activePeriod ? (
+                                <>
+                                    Payroll Period: {activePeriod.start_date} – {activePeriod.end_date} • Status: In Progress
+                                    {activePeriod.pay_date && <> • Pay Date: {activePeriod.pay_date}</>}
+                                </>
+                            ) : (
+                                'No payroll period selected'
+                            )}
                         </p>
                     </div>
 
@@ -217,6 +262,14 @@ const PayrollForm = ({
                                 <DialogTitle>Review Payroll</DialogTitle>
                             </DialogHeader>
 
+                            {error && (
+                                <Alert className="border-red-500 bg-red-50">
+                                    <AlertDescription className="text-red-800">
+                                        {error}
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+
                             <div className="space-y-3">
                                 <div className="flex justify-between">
                                     <span>Gross Pay</span>
@@ -233,10 +286,19 @@ const PayrollForm = ({
                             </div>
 
                             <DialogFooter>
-                                <Button variant="outline" onClick={() => setReviewOpen(false)}>
+                                <Button
+                                    variant="outline"
+                                    onClick={() => setReviewOpen(false)}
+                                    disabled={isLoading}
+                                >
                                     Back
                                 </Button>
-                                <Button>Confirm & Complete</Button>
+                                <Button
+                                    onClick={handleConfirmAndComplete}
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? "Saving..." : "Confirm & Complete"}
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>

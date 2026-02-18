@@ -3,9 +3,10 @@ import BreadcrumbComp from 'src/layouts/full/shared/breadcrumb/BreadcrumbComp';
 import { PayrollDataTable } from 'src/components/apps/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
 import EmployeeFormModal from 'src/views/apps/payroll/EmployeeFormModal';
-
 import PayrollForm from 'src/views/apps/payroll/PayrollForm';
-import {Employee} from 'src/types/employee'
+import { PayrollProvider } from 'src/context/payroll-context';
+import PayrollPeriodManager from 'src/components/apps/payroll/PayrollPeriodManager';
+import { Employee } from 'src/types/employee';
 
 const BCrumb = [
     {
@@ -66,24 +67,68 @@ const Payroll = () => {
     };
     
     return (
+        <PayrollProvider>
+            <PayrollContent
+                selectedEmployee={selectedEmployee}
+                setSelectedEmployee={setSelectedEmployee}
+                isFormOpen={isFormOpen}
+                setIsFormOpen={setIsFormOpen}
+                employees={employees}
+                setEmployees={setEmployees}
+                isLoading={isLoading}
+                error={error}
+                handleEdit={handleEdit}
+                handleAddNew={handleAddNew}
+                handleFormComplete={handleFormComplete}
+            />
+        </PayrollProvider>
+    );
+};
+
+const PayrollContent = ({
+    selectedEmployee,
+    setSelectedEmployee,
+    isFormOpen,
+    setIsFormOpen,
+    employees,
+    setEmployees,
+    isLoading,
+    error,
+    handleEdit,
+    handleAddNew,
+    handleFormComplete,
+}: any) => {
+    return (
         <>
             <BreadcrumbComp title="Payroll" items={BCrumb} />
-            <div className="flex gap-6 flex-col ">
-                {error && (
-                    <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        Error: {error}
+            <div className="flex gap-6 flex-col">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    {/* Payroll Period Manager */}
+                    <div className="lg:col-span-1">
+                        <div className="rounded-lg border p-4">
+                            <PayrollPeriodManager />
+                        </div>
                     </div>
-                )}
-                {isLoading ? (
-                    <div className="p-4 text-center text-gray-500">Loading employees...</div>
-                ) : (
-                    <PayrollDataTable<Employee>
-                        data={employees}
-                        onEdit={handleEdit}
-                        onAddNew={handleAddNew}
-                        visibleColumns={['first_name', 'last_name']}
-                    />
-                )}
+
+                    {/* Employee Data Table */}
+                    <div className="lg:col-span-3">
+                        {error && (
+                            <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                                Error: {error}
+                            </div>
+                        )}
+                        {isLoading ? (
+                            <div className="p-4 text-center text-gray-500">Loading employees...</div>
+                        ) : (
+                            <PayrollDataTable<Employee>
+                                data={employees}
+                                onEdit={handleEdit}
+                                onAddNew={handleAddNew}
+                                visibleColumns={['first_name', 'last_name']}
+                            />
+                        )}
+                    </div>
+                </div>
             </div>
 
             {isFormOpen && !selectedEmployee && (
