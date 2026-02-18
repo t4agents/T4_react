@@ -31,7 +31,7 @@ import {
     SelectValue,
 } from 'src/components/ui/select';
 import { Label } from 'src/components/ui/label';
-import CardBox from '../../shared/CardBox';
+import CardBox from '../shared/CardBox';
 
 const badgeColors = [
     'bg-blue-100 text-blue-700',
