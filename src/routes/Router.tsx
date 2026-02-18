@@ -50,7 +50,7 @@ const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/User
 /* =========================
    Apps
 ========================= */
-const EmployeeList = Loadable(lazy(() => import('src/hr/employee/EmployeeList')));
+const EmployeeList = Loadable(lazy(() => import('src/settings/employee/EmployeeList')));
 
 
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
