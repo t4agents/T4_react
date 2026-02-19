@@ -130,14 +130,6 @@ const Clients = () => {
 
     const selectedClient = clients.find((c) => c.id === selectedClientId);
 
-    // Sort clients so selected one is first
-    const sortedClients = selectedClientId
-        ? [
-            ...clients.filter((c) => c.id === selectedClientId),
-            ...clients.filter((c) => c.id !== selectedClientId),
-        ]
-        : clients;
-
     const tableActionData = [
         {
             icon: 'solar:pen-new-square-broken',
@@ -226,18 +218,18 @@ const Clients = () => {
                                         <TableBody>
                                             {isLoading ? (
                                                 <TableRow>
-                                                    <TableCell colSpan={7} className="text-center py-8">
+                                                    <TableCell colSpan={6} className="text-center py-8">
                                                         Loading clients...
                                                     </TableCell>
                                                 </TableRow>
-                                            ) : sortedClients.length === 0 ? (
+                                            ) : clients.length === 0 ? (
                                                 <TableRow>
-                                                    <TableCell colSpan={7} className="text-center py-8">
+                                                    <TableCell colSpan={6} className="text-center py-8">
                                                         No clients found
                                                     </TableCell>
                                                 </TableRow>
                                             ) : (
-                                                sortedClients.map((client) => (
+                                                clients.map((client) => (
                                                     <TableRow
                                                         key={client.id}
                                                         className={
