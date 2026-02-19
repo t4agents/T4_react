@@ -108,23 +108,23 @@ const PayrollContent = ({
                 title="Payroll" 
                 items={BCrumb} 
                 leftContent={inProgressPeriod ? (
-                    <Card className="border-blue-200 bg-blue-50 p-4 gap-2">
+                    <Card className="p-4 gap-2 bg-muted/50">
                         <CardHeader className="pb-1">
-                            <CardTitle className="text-sm font-medium text-blue-900">In Progress Period</CardTitle>
+                            <CardTitle className="text-sm font-medium">In Progress Period</CardTitle>
                         </CardHeader>
                         <CardContent className="pt-0">
-                            <p className="text-base font-semibold text-blue-900 mb-1">{inProgressPeriod.name}</p>
-                            <p className="text-xs text-blue-700 mb-1">
+                            <p className="text-base font-semibold mb-1">{inProgressPeriod.name}</p>
+                            <p className="text-xs text-muted-foreground mb-1">
                                 {inProgressPeriod.start_date} to {inProgressPeriod.end_date}
                             </p>
                             {inProgressPeriod.pay_date && (
-                                <p className="text-xs text-blue-700">Pay Date: {inProgressPeriod.pay_date}</p>
+                                <p className="text-xs text-muted-foreground">Pay Date: {inProgressPeriod.pay_date}</p>
                             )}
                         </CardContent>
                     </Card>
                 ) : (
-                    <Card className="border-gray-200 p-4">
-                        <CardContent className="text-center text-gray-500 py-2">
+                    <Card className="p-4">
+                        <CardContent className="text-center text-muted-foreground py-2">
                             No in-progress period
                         </CardContent>
                     </Card>
