@@ -61,10 +61,12 @@ export function toTitleCase(str: string) {
 
 interface DynamicTableProps<T> {
   data?: T[];
+  onAddNew?: () => void;
 }
 
 export const DataTable = <T extends Record<string, unknown>>({
   data = [],
+  onAddNew,
 }: DynamicTableProps<T>) => {
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -359,19 +361,30 @@ export const DataTable = <T extends Record<string, unknown>>({
           <p className="text-center py-8 text-gray-500">No data available.</p>
         ) : (
           <>
-            {/* Search + Download */}
-            <div className="p-4 pt-0 flex items-center justify-between flex-wrap gap-4">
-              <h3 className="text-xl font-semibold mb-2">Employee Data Table</h3>
-              <div className="flex items-center gap-2 flex-wrap">
+            {/* Title + Add Button */}  
+            <div className="p-4 pt-0 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <h3 className="text-lg sm:text-xl font-semibold">Employee Data Table</h3>
+                {onAddNew && (
+                  <Button onClick={onAddNew} className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start" size="sm">
+                    <Icon icon="mdi:plus" className="w-4 h-4" />
+                    <span className="hidden sm:inline">Add New Employee</span>
+                    <span className="sm:hidden">Add Employee</span>
+                  </Button>
+                )}
+              </div>
+              {/* Search + Download */}
+              <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                 <Input
                   type="text"
-                  className="max-w-96 lg:min-w-96 min-w-full placeholder:text-gray-400 dark:placeholder:text-white/20"
+                  className="flex-1 min-w-0 placeholder:text-gray-400 dark:placeholder:text-white/20"
                   value={globalFilter ?? ''}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder="Search your relevant items..."
                 />
-                <Button onClick={handleDownload} className="p-2 px-4 rounded-md ">
-                  <Icon icon="material-symbols:download-rounded" width={24} height={24} />
+                <Button onClick={handleDownload} className="p-2 px-4 rounded-md sm:w-auto w-full">
+                  <Icon icon="material-symbols:download-rounded" width={20} height={20} />
+                  <span className="ml-2 sm:hidden">Download</span>
                 </Button>
               </div>
             </div>
