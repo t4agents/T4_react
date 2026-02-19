@@ -26,41 +26,41 @@ const TopCards = () => {
             url: "/apps/payroll"
 
         },
-        {
-            key: "card5",
-            title: "Notes",
-            desc: "4+",
-            img: iconConnect,
-            bgcolor: "bg-info/10 dark:bg-info/10",
-            textclr: "text-info dark:text-info",
-            url: "/apps/notes"
-        },
+        // {
+        //     key: "card5",
+        //     title: "Notes",
+        //     desc: "4+",
+        //     img: iconConnect,
+        //     bgcolor: "bg-info/10 dark:bg-info/10",
+        //     textclr: "text-info dark:text-info",
+        //     url: "/apps/notes"
+        // },
         {
             key: "card2",
-            title: "Icons",
+            title: "Schedules",
             desc: "+1K",
             img: iconSpeechBubble,
             bgcolor: "bg-success/10 dark:bg-success/10",
             textclr: "text-success dark:text-success",
-            url: "/icons/iconify"
+            url: "/payroll/schedule"
         },
-        {
-            key: "card3",
-            title: "Blogs",
-            desc: "10+",
-            img: iconFavorites,
-            bgcolor: "bg-error/10 dark:bg-error/10",
-            textclr: "text-error dark:text-error",
-            url: "/apps/blog/post"
-        },
+        // {
+        //     key: "card3",
+        //     title: "Reports",
+        //     desc: "10+",
+        //     img: iconFavorites,
+        //     bgcolor: "bg-info/10 dark:bg-info/10",
+        //     textclr: "text-info dark:text-info",
+        //     url: "/apps/notes"
+        // },
         {
             key: "card4",
-            title: "Tickets",
+            title: "Periods",
             desc: "8+",
             img: iconMailbox,
             bgcolor: "bg-secondary/10 dark:bg-secondary/10",
             textclr: "text-primary dark:text-primary",
-            url: "/apps/tickets"
+            url: "/payroll/periods"
         },
         {
             key: "card7",
