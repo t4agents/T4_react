@@ -45,7 +45,7 @@ const Modern = Loadable(lazy(() => import('../views/dashboards/Modern')));
 /* =========================
    Pages
 ========================= */
-const UserProfile = Loadable(lazy(() => import('../views/pages/user-profile/UserProfile')));
+const UserProfile = Loadable(lazy(() => import('../settings/user-profile/UserProfile')));
 
 /* =========================
    Apps
