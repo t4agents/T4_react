@@ -4,9 +4,10 @@ import { PayrollDataTable } from 'src/components/payroll/PayrollDataTable';
 import { employeeAPI } from 'src/api/employee';
 import EmployeeFormModal from 'src/payroll/EmployeeFormModal';
 import PayrollForm from 'src/payroll/PayrollForm';
-import { PayrollProvider } from 'src/context/payroll-context';
+import { PayrollProvider, usePayroll } from 'src/context/payroll-context';
 import PayrollPeriodManager from 'src/components/payroll/PayrollPeriodManager';
 import { Employee } from 'src/types/employee';
+import { Card, CardHeader, CardTitle, CardContent } from 'src/components/ui/card';
 
 const BCrumb = [
     {
@@ -98,20 +99,41 @@ const PayrollContent = ({
     handleAddNew,
     handleFormComplete,
 }: any) => {
+    const { periods } = usePayroll();
+    const inProgressPeriod = periods.find(period => period.status === 'in_progress');
+
     return (
         <>
-            <BreadcrumbComp title="Payroll" items={BCrumb} />
+            <BreadcrumbComp 
+                title="Payroll" 
+                items={BCrumb} 
+                leftContent={inProgressPeriod ? (
+                    <Card className="border-blue-200 bg-blue-50 p-4 gap-2">
+                        <CardHeader className="pb-1">
+                            <CardTitle className="text-sm font-medium text-blue-900">In Progress Period</CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                            <p className="text-base font-semibold text-blue-900 mb-1">{inProgressPeriod.name}</p>
+                            <p className="text-xs text-blue-700 mb-1">
+                                {inProgressPeriod.start_date} to {inProgressPeriod.end_date}
+                            </p>
+                            {inProgressPeriod.pay_date && (
+                                <p className="text-xs text-blue-700">Pay Date: {inProgressPeriod.pay_date}</p>
+                            )}
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <Card className="border-gray-200 p-4">
+                        <CardContent className="text-center text-gray-500 py-2">
+                            No in-progress period
+                        </CardContent>
+                    </Card>
+                )}
+            />
             <div className="flex gap-6 flex-col">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* Payroll Period Manager */}
-                    <div className="lg:col-span-1">
-                        <div className="rounded-lg border p-4">
-                            <PayrollPeriodManager />
-                        </div>
-                    </div>
-
+                <div className="grid grid-cols-1 gap-6">
                     {/* Employee Data Table */}
-                    <div className="lg:col-span-3">
+                    <div>
                         {error && (
                             <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
                                 Error: {error}

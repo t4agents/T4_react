@@ -1,5 +1,6 @@
 export interface PayrollPeriod {
     id?: string;
+    name?: string;
     payroll_schedule_id: string;
     start_date: string;
     end_date: string;
