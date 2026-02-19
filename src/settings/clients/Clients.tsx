@@ -153,8 +153,10 @@ const Clients = () => {
         setIsLoading(true);
         try {
             const data = await clientsAPI.listClients();
-            // filter out deleted if backend marks is_delete
-            const filtered = Array.isArray(data) ? data.filter((d: any) => !d.is_delete) : [];
+            // filter out deleted if backend marks is_delete or is_deleted
+            const filtered = Array.isArray(data)
+                ? data.filter((d: any) => !d.is_delete && !d.is_deleted)
+                : [];
             setClients(filtered as any);
         } catch (err) {
             console.error('Failed to load clients:', err);

@@ -66,11 +66,10 @@ export const clientsAPI = {
   },
 
   async softDeleteClient(id: string) {
-    // mark is_delete = true
+    // Call DELETE endpoint which sets is_deleted = true on backend
     const response = await fetch(`${API_BASE_URL}/biz-entity/${id}`, {
-      method: 'PATCH',
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ is_delete: true }),
     });
 
     if (!response.ok) {
