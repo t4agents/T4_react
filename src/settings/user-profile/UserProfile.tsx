@@ -124,10 +124,15 @@ const UserProfile = () => {
                     <CardBox className="p-6 overflow-hidden">
                         <h5 className="card-title mb-6">My Organization</h5>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-7 2xl:gap-x-32 mb-6">
-                            <div><p className="text-xs text-gray-500">Organization Name</p><p className="text-gray-400">-</p></div>
-                            <div><p className="text-xs text-gray-500">Department</p><p className="text-gray-400">-</p></div>
-                            <div><p className="text-xs text-gray-500">Team</p><p className="text-gray-400">-</p></div>
-                            <div><p className="text-xs text-gray-500">Role</p><p className="text-gray-400">-</p></div>
+                            <div><p className="text-xs text-gray-500">Organization Name</p><p>Tech Solutions Inc.</p></div>
+                            <div><p className="text-xs text-gray-500">Department</p><p>Engineering</p></div>
+                            <div><p className="text-xs text-gray-500">Phone</p><p>(555) 987-6543</p></div>
+                            <div><p className="text-xs text-gray-500">Email</p><p>info@techsolutions.com</p></div>
+                            <div><p className="text-xs text-gray-500">Address</p><p>123 Business Ave</p></div>
+                            <div><p className="text-xs text-gray-500">City</p><p>San Francisco, CA</p></div>
+                            <div><p className="text-xs text-gray-500">Province / State</p><p>California</p></div>
+                            <div><p className="text-xs text-gray-500">PIN Code</p><p>94105</p></div>
+                            <div><p className="text-xs text-gray-500">Postal Code</p><p>94105</p></div>
                         </div>
                         <div className="flex justify-end">
                             <Button disabled color={"primary"} className="flex items-center gap-1.5 rounded-md opacity-50 cursor-not-allowed">
