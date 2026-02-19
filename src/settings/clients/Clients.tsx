@@ -18,6 +18,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from 'src/components/ui/dropdown-menu';
+import { clientsAPI } from 'src/api/clients';
+import BizEntityFormModal from './BizEntityFormModal';
 import { TbDotsVertical } from 'react-icons/tb';
 import { Icon } from '@iconify/react';
 
@@ -127,6 +129,8 @@ const Clients = () => {
     const [clients, setClients] = useState<Client[]>(mockClients);
     const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingClient, setEditingClient] = useState<any | null>(null);
 
     const selectedClient = clients.find((c) => c.id === selectedClientId);
 
@@ -144,6 +148,45 @@ const Clients = () => {
     const handleCheckboxChange = (clientId: string) => {
         setSelectedClientId(selectedClientId === clientId ? null : clientId);
     };
+
+    const fetchClients = async () => {
+        setIsLoading(true);
+        try {
+            const data = await clientsAPI.listClients();
+            // filter out deleted if backend marks is_delete
+            const filtered = Array.isArray(data) ? data.filter((d: any) => !d.is_delete) : [];
+            setClients(filtered as any);
+        } catch (err) {
+            console.error('Failed to load clients:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleCreateClient = () => {
+        setEditingClient(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditClient = (client: any) => {
+        setEditingClient(client);
+        setIsModalOpen(true);
+    };
+
+    const handleDeleteClient = async (clientId: string) => {
+        try {
+            await clientsAPI.softDeleteClient(clientId);
+            // reload
+            await fetchClients();
+        } catch (err) {
+            console.error('Failed to delete client:', err);
+        }
+    };
+
+    // load on mount
+    useEffect(() => {
+        fetchClients();
+    }, []);
 
     return (
         <>
@@ -182,7 +225,7 @@ const Clients = () => {
                 <CardBox>
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-xl font-semibold">Clients List</h3>
-                        <Button color={"primary"} className="flex items-center gap-1.5 rounded-md">
+                        <Button onClick={handleCreateClient} color={"primary"} className="flex items-center gap-1.5 rounded-md">
                             <Icon icon="solar:add-circle-outline" width="18" height="18" /> Add Client
                         </Button>
                     </div>
@@ -284,23 +327,16 @@ const Clients = () => {
                                                                         <TbDotsVertical size={22} />
                                                                     </span>
                                                                 </DropdownMenuTrigger>
-                                                                <DropdownMenuContent
-                                                                    align="end"
-                                                                    className="w-40"
-                                                                >
-                                                                    {tableActionData.map((action, idx) => (
-                                                                        <DropdownMenuItem
-                                                                            key={idx}
-                                                                            className="flex gap-3 items-center"
-                                                                        >
-                                                                            <Icon
-                                                                                icon={action.icon}
-                                                                                height={18}
-                                                                            />
-                                                                            <span>{action.listtitle}</span>
+                                                                <DropdownMenuContent align="end" className="w-40">
+                                                                        <DropdownMenuItem className="flex gap-3 items-center cursor-pointer" onClick={() => handleEditClient(client)}>
+                                                                            <Icon icon={'solar:pen-new-square-broken'} height={18} />
+                                                                            <span>Edit</span>
                                                                         </DropdownMenuItem>
-                                                                    ))}
-                                                                </DropdownMenuContent>
+                                                                        <DropdownMenuItem className="flex gap-3 items-center cursor-pointer" onClick={() => handleDeleteClient(client.id)}>
+                                                                            <Icon icon={'solar:trash-bin-minimalistic-outline'} height={18} />
+                                                                            <span>Delete</span>
+                                                                        </DropdownMenuItem>
+                                                                    </DropdownMenuContent>
                                                             </DropdownMenu>
                                                         </TableCell>
                                                     </TableRow>
@@ -313,6 +349,12 @@ const Clients = () => {
                         </div>
                     </div>
                 </CardBox>
+                    <BizEntityFormModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onComplete={async () => { setIsModalOpen(false); await fetchClients(); }}
+                        initialData={editingClient}
+                    />
             </div>
         </>
     );
