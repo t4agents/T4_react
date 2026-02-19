@@ -108,6 +108,11 @@ const UserProfile = () => {
                             <div><p className="text-xs text-gray-500">Email</p><p>{personal.email}</p></div>
                             <div><p className="text-xs text-gray-500">Phone</p><p>{personal.phone}</p></div>
                             <div><p className="text-xs text-gray-500">Position</p><p>{personal.position}</p></div>
+                            <div><p className="text-xs text-gray-500">Location</p><p>{address.location}</p></div>
+                            <div><p className="text-xs text-gray-500">Province / State</p><p>{address.state}</p></div>
+                            <div><p className="text-xs text-gray-500">PIN Code</p><p>{address.pin}</p></div>
+                            <div><p className="text-xs text-gray-500">ZIP</p><p>{address.zip}</p></div>
+                            <div><p className="text-xs text-gray-500">Federal Tax No.</p><p>{address.taxNo}</p></div>
                         </div>
                         <div className="flex justify-end">
                             <Button onClick={() => { setModalType("personal"); setOpenModal(true); }} color={"primary"} className="flex items-center gap-1.5 rounded-md">
@@ -117,16 +122,15 @@ const UserProfile = () => {
                     </CardBox>
 
                     <CardBox className="p-6 overflow-hidden">
-                        <h5 className="card-title mb-6">Address Details</h5>
+                        <h5 className="card-title mb-6">My Organization</h5>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-7 2xl:gap-x-32 mb-6">
-                            <div><p className="text-xs text-gray-500">Location</p><p>{address.location}</p></div>
-                            <div><p className="text-xs text-gray-500">Province / State</p><p>{address.state}</p></div>
-                            <div><p className="text-xs text-gray-500">PIN Code</p><p>{address.pin}</p></div>
-                            <div><p className="text-xs text-gray-500">ZIP</p><p>{address.zip}</p></div>
-                            <div><p className="text-xs text-gray-500">Federal Tax No.</p><p>{address.taxNo}</p></div>
+                            <div><p className="text-xs text-gray-500">Organization Name</p><p className="text-gray-400">-</p></div>
+                            <div><p className="text-xs text-gray-500">Department</p><p className="text-gray-400">-</p></div>
+                            <div><p className="text-xs text-gray-500">Team</p><p className="text-gray-400">-</p></div>
+                            <div><p className="text-xs text-gray-500">Role</p><p className="text-gray-400">-</p></div>
                         </div>
                         <div className="flex justify-end">
-                            <Button onClick={() => { setModalType("address"); setOpenModal(true); }} color={"primary"} className="flex items-center gap-1.5 rounded-md">
+                            <Button disabled color={"primary"} className="flex items-center gap-1.5 rounded-md opacity-50 cursor-not-allowed">
                                 <Icon icon="ic:outline-edit" width="18" height="18" /> Edit
                             </Button>
                         </div>
@@ -138,7 +142,7 @@ const UserProfile = () => {
                 <DialogContent className="max-w-2xl">
                     <DialogHeader>
                         <DialogTitle className="mb-4">
-                            {modalType === "personal" ? "Edit Personal Information" : "Edit Address Details"}
+                            {modalType === "personal" ? "Edit Personal Information" : ""}
                         </DialogTitle>
                     </DialogHeader>
 
@@ -225,9 +229,9 @@ const UserProfile = () => {
                                     onChange={(e) => setTempPersonal({ ...tempPersonal, dribbble: e.target.value })}
                                 />
                             </div>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                            <div className="flex flex-col gap-2 lg:col-span-2">
+                                <h6 className="font-semibold text-sm mt-4 mb-2">Address Information</h6>
+                            </div>
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="location">Location</Label>
                                 <Input
@@ -274,7 +278,7 @@ const UserProfile = () => {
                                 />
                             </div>
                         </div>
-                    )}
+                    ) : null}
 
                     <DialogFooter className="flex gap-2 mt-4">
                         <Button color={"primary"} className="rounded-md" onClick={handleSave}>
