@@ -128,6 +128,13 @@ const SidebarContent: MenuItem[] = [
                 url: '/user-profile',
                 isPro: false,
             },
+            {
+                id: uniqueId(),
+                name: 'Clients',
+                icon: 'solar:buildings-2-linear',
+                url: '/clients',
+                isPro: false,
+            },
         ],
     },
 ];

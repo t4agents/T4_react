@@ -46,6 +46,7 @@ const Modern = Loadable(lazy(() => import('../views/dashboards/Modern')));
    Pages
 ========================= */
 const UserProfile = Loadable(lazy(() => import('../settings/user-profile/UserProfile')));
+const Clients = Loadable(lazy(() => import('../settings/clients/Clients')));
 
 /* =========================
    Apps
@@ -94,6 +95,7 @@ const router = createBrowserRouter([
                     { path: 'apps/blog/post', element: <Blog /> },
                     { path: 'apps/blog/detail/:id', element: <BlogDetail /> },
                     { path: 'user-profile', element: <UserProfile /> },
+                    { path: 'clients', element: <Clients /> },
                     { path: 'icons/iconify', element: <SolarIcon /> },
                 ],
             },
