@@ -18,7 +18,7 @@ export const employeeAPI = {
    * Create a new employee
    */
   async createEmployee(data: Partial<Employee>): Promise<Employee> {
-    const response = await fetch(`${API_BASE_URL}/employees`, {
+    const response = await fetch(`${API_BASE_URL}/employee`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const employeeAPI = {
    * Get employee by ID
    */
   async getEmployee(employeeId: string): Promise<Employee> {
-    const response = await fetch(`${API_BASE_URL}/employees/${employeeId}`);
+    const response = await fetch(`${API_BASE_URL}/employee/${employeeId}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch employee: ${response.statusText}`);
@@ -59,8 +59,8 @@ export const employeeAPI = {
     }
 
     const url = queryParams.toString()
-      ? `${API_BASE_URL}/employees?${queryParams.toString()}`
-      : `${API_BASE_URL}/employees`;
+      ? `${API_BASE_URL}/employee?${queryParams.toString()}`
+      : `${API_BASE_URL}/employee`;
 
     const response = await fetch(url);
 
@@ -80,7 +80,7 @@ export const employeeAPI = {
       last_name: params.last_name,
     });
 
-    const response = await fetch(`${API_BASE_URL}/employees/search/by-name?${queryParams.toString()}`);
+    const response = await fetch(`${API_BASE_URL}/employee/search/by-name?${queryParams.toString()}`);
 
     if (!response.ok) {
       throw new Error(`Failed to search employees: ${response.statusText}`);
@@ -93,7 +93,7 @@ export const employeeAPI = {
    * Update employee
    */
   async updateEmployee(employeeId: string, data: Partial<Employee>): Promise<Employee> {
-    const response = await fetch(`${API_BASE_URL}/employees/${employeeId}`, {
+    const response = await fetch(`${API_BASE_URL}/employee/${employeeId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export const employeeAPI = {
    * Delete employee
    */
   async deleteEmployee(employeeId: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/employees/${employeeId}`, {
+    const response = await fetch(`${API_BASE_URL}/employee/${employeeId}`, {
       method: 'DELETE',
     });
 
@@ -125,7 +125,7 @@ export const employeeAPI = {
    * Get total employee count
    */
   async getEmployeeCount(): Promise<number> {
-    const response = await fetch(`${API_BASE_URL}/employees/stats/count`);
+    const response = await fetch(`${API_BASE_URL}/employee/stats/count`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch employee count: ${response.statusText}`);
