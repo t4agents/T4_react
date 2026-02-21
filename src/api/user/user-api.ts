@@ -22,6 +22,7 @@ export const userAPI = {
         const response = await apiFetch('/user/me', {
             method: 'GET',
         });
+        console.log('API response for getCurrentUser:', response);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch user: ${response.statusText}`);

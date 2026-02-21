@@ -22,7 +22,7 @@ const AuthLogin = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
             const token = await userCredential.user.getIdToken();
-            // console.log("FIREBASE ID TOKEN:", token);
+            console.log("FIREBASE ID TOKEN:", token);
 
             localStorage.setItem("access_token", token);  // ✅ store
             navigate("/");
