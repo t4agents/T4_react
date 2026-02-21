@@ -53,7 +53,7 @@ const UserProfile = () => {
         const fetchUser = async () => {
             try {
                 const user = await userAPI.getCurrentUser();
-                console.log('Fetched user:', user);
+                console.log('----Fetched user:', user);
                 setPersonal({
                     firstName: user.first_name || "",
                     lastName: user.last_name || "",
