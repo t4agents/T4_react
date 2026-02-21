@@ -1,4 +1,5 @@
 import { config } from 'src/config';
+import { apiFetch } from 'src/api/http';
 
 const API_BASE_URL = config.api.baseUrl;
 
@@ -16,11 +17,8 @@ export interface Tenant {
 
 export const tenantAPI = {
   async getCurrentTenant(): Promise<Tenant> {
-    const response = await fetch(`${API_BASE_URL}/tenant`, {
+    const response = await apiFetch('/tenant', {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     if (!response.ok) {
@@ -31,11 +29,8 @@ export const tenantAPI = {
   },
 
   async updateTenant(data: Partial<Tenant>): Promise<Tenant> {
-    const response = await fetch(`${API_BASE_URL}/tenant`, {
+    const response = await apiFetch('/tenant', {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(data),
     });
 

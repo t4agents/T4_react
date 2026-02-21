@@ -7,10 +7,14 @@ import { Button } from "src/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "src/components/ui/dialog";
 import { Label } from "src/components/ui/label";
 import { Input } from "src/components/ui/input";
+import { userAPI } from "src/api/user/user-api";
 
 const UserProfile = () => {
     const [openModal, setOpenModal] = useState(false);
     const [modalType, setModalType] = useState<"personal" | "address" | null>(null);
+
+    const defaultProfileImg = profileImg;
+    const [currentProfileImg, setCurrentProfileImg] = useState(defaultProfileImg);
 
     const BCrumb = [
         {
@@ -23,15 +27,15 @@ const UserProfile = () => {
     ];
 
     const [personal, setPersonal] = useState({
-        firstName: "Mathew",
-        lastName: "Anderson",
-        email: "mathew.anderson@gmail.com",
-        phone: "(347) 528-1947",
-        position: "Team Leader",
-        facebook: "https://www.facebook.com/wrappixel",
-        twitter: "https://twitter.com/wrappixel",
-        github: "https://github.com/wrappixel",
-        dribbble: "https://dribbble.com/wrappixel"
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        position: "",
+        facebook: "",
+        twitter: "",
+        github: "",
+        dribbble: ""
     });
 
     const [address, setAddress] = useState({
@@ -46,6 +50,32 @@ const UserProfile = () => {
     const [tempAddress, setTempAddress] = useState(address);
 
     useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const user = await userAPI.getCurrentUser();
+                console.log('Fetched user:', user);
+                setPersonal({
+                    firstName: user.first_name || "",
+                    lastName: user.last_name || "",
+                    email: user.email || "",
+                    phone: user.phone || "",
+                    position: user.position || "",
+                    facebook: user.facebook || "",
+                    twitter: user.twitter || "",
+                    github: user.github || "",
+                    dribbble: user.dribbble || ""
+                });
+                if (user.profile_picture) {
+                    setCurrentProfileImg(user.profile_picture);
+                }
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    useEffect(() => {
         if (openModal && modalType === "personal") {
             setTempPersonal(personal);
         }
@@ -54,20 +84,44 @@ const UserProfile = () => {
         }
     }, [openModal, modalType, personal, address]);
 
-    const handleSave = () => {
-        if (modalType === "personal") {
-            setPersonal(tempPersonal);
-        } else if (modalType === "address") {
-            setAddress(tempAddress);
+    const handleSave = async () => {
+        try {
+            const updatedUser = await userAPI.updateUser({
+                first_name: tempPersonal.firstName,
+                last_name: tempPersonal.lastName,
+                email: tempPersonal.email,
+                phone: tempPersonal.phone,
+                position: tempPersonal.position,
+                facebook: tempPersonal.facebook,
+                twitter: tempPersonal.twitter,
+                github: tempPersonal.github,
+                dribbble: tempPersonal.dribbble
+            });
+            setPersonal({
+                firstName: updatedUser.first_name || "",
+                lastName: updatedUser.last_name || "",
+                email: updatedUser.email || "",
+                phone: updatedUser.phone || "",
+                position: updatedUser.position || "",
+                facebook: updatedUser.facebook || "",
+                twitter: updatedUser.twitter || "",
+                github: updatedUser.github || "",
+                dribbble: updatedUser.dribbble || ""
+            });
+            if (updatedUser.profile_picture) {
+                setCurrentProfileImg(updatedUser.profile_picture);
+            }
+            setOpenModal(false);
+        } catch (error) {
+            console.error('Failed to update user:', error);
         }
-        setOpenModal(false);
     };
 
     const socialLinks = [
-        { href: "https://www.facebook.com/wrappixel", icon: "streamline-logos:facebook-logo-2-solid" },
-        { href: "https://twitter.com/wrappixel", icon: "streamline-logos:x-twitter-logo-solid" },
-        { href: "https://github.com/wrappixel", icon: "ion:logo-github" },
-        { href: "https://dribbble.com/wrappixel", icon: "streamline-flex:dribble-logo-remix" },
+        { href: personal.facebook || "#", icon: "streamline-logos:facebook-logo-2-solid" },
+        { href: personal.twitter || "#", icon: "streamline-logos:x-twitter-logo-solid" },
+        { href: personal.github || "#", icon: "ion:logo-github" },
+        { href: personal.dribbble || "#", icon: "streamline-flex:dribble-logo-remix" },
     ];
 
     return (
@@ -77,7 +131,7 @@ const UserProfile = () => {
                 <CardBox className="p-6 overflow-hidden">
                     <div className="flex flex-col sm:flex-row items-center gap-6 rounded-xl relative w-full break-words">
                         <div>
-                            <img src={profileImg} alt="image" width={80} height={80} className="rounded-full" />
+                            <img src={currentProfileImg} alt="image" width={80} height={80} className="rounded-full" />
                         </div>
                         <div className="flex flex-wrap gap-4 justify-center sm:justify-between items-center w-full">
                             <div className="flex flex-col sm:text-left text-center gap-1.5">

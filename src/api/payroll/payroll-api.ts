@@ -1,9 +1,6 @@
 import { PayrollPeriod, PayrollSchedule } from 'src/types/payroll';
 import { config } from 'src/config';
-
-import { auth } from "src/lib/firebase";
-const user = auth.currentUser;
-const token = await user?.getIdToken();
+import { apiFetch } from 'src/api/http';
 
 const API_BASE_URL = config.api.baseUrl;
 
@@ -24,11 +21,8 @@ export const payrollAPI = {
      * Create a new payroll period
      */
     async createPayrollPeriod(data: Partial<PayrollPeriod>): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll/periods`, {
+        const response = await apiFetch('/payroll/periods', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(data),
         });
 
@@ -43,7 +37,7 @@ export const payrollAPI = {
      * Get payroll period by ID
      */
     async getPayrollPeriod(periodId: string): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`);
+        const response = await apiFetch(`/payroll/periods/${periodId}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll period: ${response.statusText}`);
@@ -68,11 +62,11 @@ export const payrollAPI = {
             queryParams.append('status', params.status);
         }
 
-        const url = queryParams.toString()
-            ? `${API_BASE_URL}/payroll/periods?${queryParams.toString()}`
-            : `${API_BASE_URL}/payroll/periods`;
+        const path = queryParams.toString()
+            ? `/payroll/periods?${queryParams.toString()}`
+            : '/payroll/periods';
 
-        const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`,},});
+        const response = await apiFetch(path);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll periods: ${response.statusText}`);
@@ -85,11 +79,8 @@ export const payrollAPI = {
      * Update payroll period
      */
     async updatePayrollPeriod(periodId: string, data: Partial<PayrollPeriod>): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`, {
+        const response = await apiFetch(`/payroll/periods/${periodId}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(data),
         });
 
@@ -104,7 +95,7 @@ export const payrollAPI = {
      * Delete payroll period
      */
     async deletePayrollPeriod(periodId: string): Promise<void> {
-        const response = await fetch(`${API_BASE_URL}/payroll/periods/${periodId}`, {
+        const response = await apiFetch(`/payroll/periods/${periodId}`, {
             method: 'DELETE',
         });
 
@@ -117,7 +108,7 @@ export const payrollAPI = {
      * Get current or active payroll period
      */
     async getActivePayrollPeriod(): Promise<PayrollPeriod> {
-        const response = await fetch(`${API_BASE_URL}/payroll/periods/active/current`);
+        const response = await apiFetch('/payroll/periods/active/current');
 
         if (!response.ok) {
             throw new Error(`Failed to fetch active payroll period: ${response.statusText}`);
@@ -134,11 +125,8 @@ export const payrollAPI = {
     async createPayrollSchedule(
         data: Partial<PayrollSchedule>
     ): Promise<PayrollSchedule> {
-        const response = await fetch(`${API_BASE_URL}/payroll/schedule`, {
+        const response = await apiFetch('/payroll/schedule', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(data),
         });
 
@@ -153,7 +141,7 @@ export const payrollAPI = {
      * Get payroll schedule by ID
      */
     async getPayrollSchedule(scheduleId: string): Promise<PayrollSchedule> {
-        const response = await fetch(`${API_BASE_URL}/payroll/schedule/${scheduleId}`);
+        const response = await apiFetch(`/payroll/schedule/${scheduleId}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll schedule: ${response.statusText}`);
@@ -178,11 +166,11 @@ export const payrollAPI = {
             queryParams.append('status', params.status);
         }
 
-        const url = queryParams.toString()
-            ? `${API_BASE_URL}/payroll/schedules?${queryParams.toString()}`
-            : `${API_BASE_URL}/payroll/schedules`;
+        const path = queryParams.toString()
+            ? `/payroll/schedules?${queryParams.toString()}`
+            : '/payroll/schedules';
 
-        const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`,},});
+        const response = await apiFetch(path);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll schedules: ${response.statusText}`);
@@ -198,11 +186,8 @@ export const payrollAPI = {
         scheduleId: string,
         data: Partial<PayrollSchedule>
     ): Promise<PayrollSchedule> {
-        const response = await fetch(`${API_BASE_URL}/payroll/schedule/${scheduleId}`, {
+        const response = await apiFetch(`/payroll/schedule/${scheduleId}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(data),
         });
 
@@ -217,7 +202,7 @@ export const payrollAPI = {
      * Delete payroll schedule
      */
     async deletePayrollSchedule(scheduleId: string): Promise<void> {
-        const response = await fetch(`${API_BASE_URL}/payroll/schedule/${scheduleId}`, {
+        const response = await apiFetch(`/payroll/schedule/${scheduleId}`, {
             method: 'DELETE',
         });
 

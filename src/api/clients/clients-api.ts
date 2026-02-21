@@ -1,4 +1,5 @@
 import { config } from 'src/config';
+import { apiFetch } from 'src/api/http';
 
 const API_BASE_URL = config.api.baseUrl;
 
@@ -26,11 +27,8 @@ export interface ClientPayload {
 
 export const clientsAPI = {
   async createClient(data: ClientPayload) {
-    const response = await fetch(`${API_BASE_URL}/biz-entity`, {
+    const response = await apiFetch('/biz-entity', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(data),
     });
 
@@ -43,7 +41,7 @@ export const clientsAPI = {
   },
 
   async listClients() {
-    const response = await fetch(`${API_BASE_URL}/biz-entity`);
+    const response = await apiFetch('/biz-entity');
     if (!response.ok) {
       throw new Error(`Failed to fetch clients: ${response.statusText}`);
     }
@@ -51,9 +49,8 @@ export const clientsAPI = {
   },
 
   async updateClient(id: string, data: Partial<ClientPayload>) {
-    const response = await fetch(`${API_BASE_URL}/biz-entity/${id}`, {
+    const response = await apiFetch(`/biz-entity/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
@@ -67,9 +64,8 @@ export const clientsAPI = {
 
   async softDeleteClient(id: string) {
     // Call DELETE endpoint which sets is_deleted = true on backend
-    const response = await fetch(`${API_BASE_URL}/biz-entity/${id}`, {
+    const response = await apiFetch(`/biz-entity/${id}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
     });
 
     if (!response.ok) {
