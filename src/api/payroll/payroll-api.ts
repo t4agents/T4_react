@@ -1,6 +1,10 @@
 import { PayrollPeriod, PayrollSchedule } from 'src/types/payroll';
 import { config } from 'src/config';
 
+import { auth } from "src/lib/firebase";
+const user = auth.currentUser;
+const token = await user?.getIdToken();
+
 const API_BASE_URL = config.api.baseUrl;
 
 interface ListPayrollPeriodsParams {
@@ -68,7 +72,7 @@ export const payrollAPI = {
             ? `${API_BASE_URL}/payroll/periods?${queryParams.toString()}`
             : `${API_BASE_URL}/payroll/periods`;
 
-        const response = await fetch(url);
+        const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`,},});
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll periods: ${response.statusText}`);
@@ -161,9 +165,7 @@ export const payrollAPI = {
     /**
      * List all payroll schedules with pagination and filtering
      */
-    async listPayrollSchedules(
-        params?: ListPayrollSchedulesParams
-    ): Promise<PayrollSchedule[]> {
+    async listPayrollSchedules(params?: ListPayrollSchedulesParams): Promise<PayrollSchedule[]> {
         const queryParams = new URLSearchParams();
 
         if (params?.skip !== undefined) {
@@ -180,7 +182,7 @@ export const payrollAPI = {
             ? `${API_BASE_URL}/payroll/schedules?${queryParams.toString()}`
             : `${API_BASE_URL}/payroll/schedules`;
 
-        const response = await fetch(url);
+        const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`,},});
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payroll schedules: ${response.statusText}`);
